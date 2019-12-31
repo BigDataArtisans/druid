@@ -49,6 +49,11 @@ public class Main
   @SuppressForbidden(reason = "System#out")
   public static void main(String[] args)
   {
+
+    System.out.println(123);
+    System.out.println(Arrays.asList(args));
+
+
     final Cli.CliBuilder<Runnable> builder = Cli.builder("druid");
 
     builder.withDescription("Druid command-line runner.")
