@@ -30,7 +30,7 @@
 
     <groupId>org.apache.druid</groupId>
     <artifactId>druid</artifactId>
-    <version>0.18.0-incubating-SNAPSHOT</version>
+    <version>0.18.66</version>
     <packaging>pom</packaging>
 
     <name>Druid</name>
@@ -1319,51 +1319,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>de.thetaphi</groupId>
-                <artifactId>forbiddenapis</artifactId>
-                <version>2.6</version>
-                <configuration>
-                    <failOnUnresolvableSignatures>false</failOnUnresolvableSignatures>
-                    <bundledSignatures>
-                        <!--
-                          This will automatically choose the right
-                          signatures based on 'maven.compiler.target':
-                        -->
-                        <bundledSignature>jdk-unsafe</bundledSignature>
-                    </bundledSignatures>
-                    <signaturesFiles>
-                        <signaturesFile>${project.parent.basedir}/codestyle/joda-time-forbidden-apis.txt</signaturesFile>
-                        <signaturesFile>${project.parent.basedir}/codestyle/druid-forbidden-apis.txt</signaturesFile>
-                    </signaturesFiles>
-                    <suppressAnnotations>
-                        <annotation>**.SuppressForbidden</annotation>
-                    </suppressAnnotations>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>compile</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                        <configuration>
-                            <bundledSignatures>
-                                <!-- Check jdk-system-out only for production code, but not in test code -->
-                                <bundledSignature>jdk-unsafe</bundledSignature>
-                                <bundledSignature>jdk-system-out</bundledSignature>
-                            </bundledSignatures>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>testCompile</id>
-                        <phase>test-compile</phase>
-                        <goals>
-                            <goal>testCheck</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>animal-sniffer-maven-plugin</artifactId>
