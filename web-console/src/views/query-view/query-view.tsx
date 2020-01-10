@@ -263,7 +263,7 @@ export class QueryView extends React.PureComponent<QueryViewProps, QueryViewStat
         let endTime: Date;
         if (!jsonQuery.queryType && typeof jsonQuery.query === 'string') {
           try {
-            const sqlResultResp = await axios.post('/druid/v2/sql', jsonQuery);
+            const sqlResultResp = await axios.post('druid/v2/sql', jsonQuery);
             endTime = new Date();
             rawQueryResult = sqlResultResp.data;
             sqlQueryId = sqlResultResp.headers['x-druid-sql-query-id'];
@@ -272,7 +272,7 @@ export class QueryView extends React.PureComponent<QueryViewProps, QueryViewStat
           }
         } else {
           try {
-            const runeResultResp = await axios.post('/druid/v2', jsonQuery);
+            const runeResultResp = await axios.post('druid/v2', jsonQuery);
             endTime = new Date();
             rawQueryResult = runeResultResp.data;
             queryId = runeResultResp.headers['x-druid-query-id'];

@@ -1,0 +1,60 @@
+
+
+wget https://mirrors.huaweicloud.com/apache/kafka/0.11.0.3/kafka_2.11-0.11.0.3.tgz
+
+
+1, 启动 druid
+cd /work/BigData/install/druid/apache-druid-0.16.1-incubating
+bin/start-micro-quickstart
+
+2, 启动 Kafka
+cd /work/BigData/install/kafka/kafka_2.11-0.11.0.3
+bin/kafka-server-start.sh config/server.properties
+
+bin/kafka-topics.sh --list --zookeeper localhost:2181
+
+bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic wikipedia
+
+bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic bigdata-rtc-olap
+
+bin/kafka-configs.sh --zookeeper localhost:2181 --alter --entity-name bigdata-rtc-olap --entity-type topics --add-config retention.ms=86400000
+
+
+
+bin/kafka-console-producer.sh --broker-list 172.20.67.10:18870 --topic bigdata-rtc-olap
+
+bin/kafka-consumer-groups.sh --bootstrap-server 172.20.67.10:18870 --describe --group index_kafka_bigdata-rtc-olap
+
+bin/kafka-run-class.sh kafka.admin.ConsumerGroupCommand --zookeeper 172.20.67.10:16711 --group index_kafka_bigdata-rtc-olap --describe
+
+bin/kafka-consumer-groups.sh --bootstrap-server 172.20.67.10:18870 --list
+
+
+
+
+查看 __consumer_offsets 内容
+
+consumer.properties中设置exclude.internal.topics=false
+0.11.0.0之后版本
+
+./bin/kafka-console-consumer.sh --topic __consumer_offsets \
+--zookeeper 172.20.67.10:16711 \
+--delete-consumer-offsets \
+--formatter "kafka.coordinator.group.GroupMetadataManager\$OffsetsMessageFormatter" \
+--consumer.config config/consumer.properties \
+--from-beginning
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

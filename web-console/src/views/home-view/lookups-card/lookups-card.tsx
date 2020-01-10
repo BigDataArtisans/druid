@@ -50,7 +50,7 @@ export class LookupsCard extends React.PureComponent<LookupsCardProps, LookupsCa
     this.lookupsQueryManager = new QueryManager({
       processQuery: async capabilities => {
         if (capabilities.hasCoordinatorAccess()) {
-          const resp = await axios.get('/druid/coordinator/v1/lookups/status');
+          const resp = await axios.get('druid/coordinator/v1/lookups/status');
           const data = resp.data;
           const lookupsCount = sum(Object.keys(data).map(k => Object.keys(data[k]).length));
           return {

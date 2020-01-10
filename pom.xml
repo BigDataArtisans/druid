@@ -117,6 +117,7 @@
     </properties>
 
     <modules>
+        <module>ademo</module>
         <module>core</module>
         <module>indexing-hadoop</module>
         <module>indexing-service</module>

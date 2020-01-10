@@ -53,7 +53,7 @@ export class StatusCard extends React.PureComponent<StatusCardProps, StatusCardS
 
     this.versionQueryManager = new QueryManager({
       processQuery: async () => {
-        const statusResp = await axios.get('/status');
+        const statusResp = await axios.get('status');
         return {
           version: statusResp.data.version,
           extensionCount: statusResp.data.modules.length,
