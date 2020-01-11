@@ -25,9 +25,18 @@ public class KafkaProduce {
 
         Producer<String, String> producer = new KafkaProducer(props);
 
-        producer.send(cr(
-                new Event("2020-01-12 18:14:10", "china", "nanjing", "uid-1", 1)
-        ));
+        producer.send(cr(new Event("2021-01-13 18:14:10", "china", "nanjing", "uid-1", 1)));
+        producer.send(cr(new Event("2021-01-13 18:14:10", "china", "nanjing", "uid-1", 1)));
+        producer.send(cr(new Event("2021-01-13 18:14:11", "china", "suzhou", "uid-1", 1)));
+        producer.send(cr(new Event("2021-01-13 18:14:12", "china", "nanjing", "uid-2", 1)));
+        producer.send(cr(new Event("2021-01-13 18:14:13", "china", "nanjing", "uid-3", 1)));
+
+        producer.send(cr(new Event("2021-01-13 18:15:10", "china", "nanjing", "uid-1", 1)));
+        producer.send(cr(new Event("2021-01-13 18:15:11", "china", "suzhou", "uid-1", 1)));
+        producer.send(cr(new Event("2021-01-13 18:15:12", "china", "nanjing", "uid-2", 1)));
+        producer.send(cr(new Event("2021-01-13 18:15:13", "china", "nanjing", "uid-3", 1)));
+
+        producer.send(cr(new Event("2021-01-13 18:16:14", "china", "nanjing", "uid-1", 1)));
 
         producer.close();
     }
