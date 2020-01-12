@@ -15,6 +15,8 @@ bin/kafka-topics.sh --list --zookeeper localhost:2181
 
 bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic wikipedia
 
+bin/kafka-topics.sh --zookeeper localhost:2181 --delete --topic bigdata-rtc-olap
+
 bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic bigdata-rtc-olap
 
 bin/kafka-configs.sh --zookeeper localhost:2181 --alter --entity-name bigdata-rtc-olap --entity-type topics --add-config retention.ms=86400000
