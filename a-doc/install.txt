@@ -1,0 +1,59 @@
+
+集群搭建
+
+https://blog.csdn.net/a794922102/article/details/88237610
+
+0, 基础知识
+MiddieManager：执行提交的任务的工作节点，数据的导入（流式数据、批量式数据）
+Coordinator：管理段，加载新段，丢弃过时段，管理段复制以及平衡段负载
+Overlord：负责接收任务、协调任务分配
+Broker：转发查询（sql、API）
+Historical：用于查询深度存储内容
+
+
+1, 安装MySQL / ZooKeeper
+172.20.67.10:3306 root MengJIA#!2015*NB
+172.20.67.10:16711
+
+export http_proxy=172.20.66.2:8888
+export https_proxy=172.20.66.2:8888
+cd extensions/mysql-metadata-storage
+wget https://repo1.maven.org/maven2/mysql/mysql-connector-java/5.1.36/mysql-connector-java-5.1.36.jar
+
+
+2, 替换 UTC 时间
+sed -i "s/user.timezone=UTC/user.timezone=CTT/g" `grep "user.timezone=UTC" -rl conf`
+
+
+3,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
