@@ -90,7 +90,7 @@ SELECT
 FROM "bigdata-rtc-olap-event"
 WHERE "__time" >= CURRENT_TIMESTAMP - INTERVAL '1' DAY
 GROUP BY 1
-ORDER BY "uv" DESC
+ORDER BY 1 DESC
 
 
 SELECT
