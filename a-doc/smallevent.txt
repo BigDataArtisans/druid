@@ -120,8 +120,10 @@ FROM datacenter.smallprogramevent
 WHERE (partition = '2020-01-14') AND (hour = 14)
 GROUP BY
     hour,
-    min;
-
+    min
+ORDER BY
+    hour ASC,
+    min ASC;
 
 
 
