@@ -34,6 +34,21 @@ bin/start-cluster-master-no-zk-server &
 1, UTC --> CTT
 sed -i "s/user.timezone=UTC/user.timezone=CTT/g" `grep "user.timezone=UTC" -rl conf`
 
+2, mysql
+172.20.67.10:3306 root MengJIA#!2015*NB
+172.20.67.10:16711
+
+export http_proxy=172.20.66.2:8888
+export https_proxy=172.20.66.2:8888
+cd conf/extensions/mysql-metadata-storage
+wget https://repo1.maven.org/maven2/mysql/mysql-connector-java/5.1.36/mysql-connector-java-5.1.36.jar
+
+
+3, zookeeper
+172.20.67.10:16711,172.20.67.11:16711,172.20.67.12:16711
+
+
+
 2, localhost --> hostname
 ## sed -i "s/localhost/$HOSTNAME/g" `grep "localhost" -rl conf/druid/cluster/_common`
 
@@ -65,7 +80,7 @@ wget https://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.
 3, Sync
 cd ~
 rm -rf *
-wget http://172.20.67.14:8000/apache-druid-0.16.1-incubating.tar.gz . && tar xf apache-druid-0.16.1-incubating.tar.gz
+wget http://172.20.67.10:8000/apache-druid-0.16.1-incubating.tar.gz . && tar xf apache-druid-0.16.1-incubating.tar.gz
 tar xf apache-druid-0.16.1-incubating.tar.gz
 cd apache-druid-0.16.1-incubating
 
