@@ -31,10 +31,19 @@ bin/start-cluster-master-no-zk-server &
 
 
 
+0, 加载扩展项
+
+"graphite-emitter"
+"mysql-metadata-storage"
+
+
+
 1, UTC --> CTT
 sed -i "s/user.timezone=UTC/user.timezone=CTT/g" `grep "user.timezone=UTC" -rl conf`
 
 2, mysql
+"mysql-metadata-storage"
+
 172.20.67.10:3306 root MengJIA#!2015*NB
 172.20.67.10:16711
 

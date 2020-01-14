@@ -81,7 +81,9 @@ sed -i "s/localhost/$HOSTNAME/g" `grep "localhost" -rl conf/druid/cluster/_commo
 
 
 STOP
-bin/service --down". More info is available at https://imply.io/docs/latest/operations
+bin/service --down
+
+". More info is available at https://imply.io/docs/latest/operations
 
 
 cd ~
