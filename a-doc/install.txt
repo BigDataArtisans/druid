@@ -5,6 +5,9 @@ https://blog.csdn.net/a794922102/article/details/88237610
 
 https://druid.apache.org/docs/latest/tutorials/cluster.html
 
+https://juejin.im/post/5cc00e4bf265da0368145e45
+
+
 0, 基础知识
 MiddieManager：执行提交的任务的工作节点，数据的导入（流式数据、批量式数据）
 Historical：用于查询深度存储内容
@@ -69,6 +72,11 @@ Start Master Server
 bin/start-cluster-master-no-zk-server &
 
 
+vi conf/druid/cluster/_common/common.runtime.properties
+172.20.67.14
+
+sed -i "s/0.0.0.0/172.20.67.12/g" `grep "0.0.0.0" -rl conf/druid/cluster/_common`
+
 
 
 
@@ -78,7 +86,7 @@ bin/service --down". More info is available at https://imply.io/docs/latest/oper
 
 cd ~
 rm -rf *
-wget http://172.20.67.10:8000/apache-druid-0.16.1-incubating.tar.gz . && tar xf apache-druid-0.16.1-incubating.tar.gz
+wget http://172.20.67.14:8000/apache-druid-0.16.1-incubating.tar.gz . && tar xf apache-druid-0.16.1-incubating.tar.gz
 tar xf apache-druid-0.16.1-incubating.tar.gz
 cd apache-druid-0.16.1-incubating
 

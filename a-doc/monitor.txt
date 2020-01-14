@@ -1,0 +1,93 @@
+
+
+
+https://mash213.wordpress.com/2018/06/11/pushing-druid-metrics-to-graphite-grafana/
+
+docker run -d \
+ --name graphite \
+ --restart=always \
+ -p 80:80 \
+ -p 2003-2004:2003-2004 \
+ -p 2023-2024:2023-2024 \
+ -p 8125:8125/udp \
+ -p 8126:8126 \
+ graphiteapp/graphite-statsd
+
+
+1, 通过 grafana
+
+https://grafana.com/grafana/plugins/abhisant-druid-datasource
+
+https://github.com/grafana/grafana/pull/3328
+
+
+
+
+
+"graphite-emitter"
+
+
+druid.monitoring.monitors=["org.apache.druid.java.util.metrics.JvmMonitor"]
+druid.emitter=composing
+druid.emitter.composing.emitters=["logging","graphite"]
+
+druid.emitter.logging.logLevel=info
+druid.emitter.graphite.hostname=10.101.52.38
+druid.emitter.graphite.port=2004
+druid.emitter.graphite.eventConverter={"type":"all", "namespacePrefix": "druid-graphite", "ignoreHostname":false, "ignoreServiceName":false}
+druid.emitter.graphite.flushPeriod=10000
+
+
+
+export DRUID_HOME=/work/BigData/install/druid/apache-druid-0.16.1-incubating
+java -classpath "$DRUID_HOME/lib/*" org.apache.druid.cli.Main tools pull-deps --clean -c org.apache.druid.extensions.contrib:graphite-emitter:0.16.1-incubating
+
+
+cd extensions
+mkdir graphite-emitter && cd graphite-emitter
+wget https://repo1.maven.org/maven2/org/apache/druid/extensions/contrib/graphite-emitter/0.16.1-incubating/graphite-emitter-0.16.1-incubating.jar
+wget https://repo1.maven.org/maven2/io/dropwizard/metrics/metrics-core/4.0.0/metrics-core-4.0.0.jar
+wget https://repo1.maven.org/maven2/io/dropwizard/metrics/metrics-graphite/3.1.2/metrics-graphite-3.1.2.jar
+wget https://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar
+
+graphite-emitter-0.16.1-incubating.jar
+metrics-core-4.0.0.jar
+metrics-graphite-3.1.2.jar
+slf4j-api-1.7.25.jar
+
+
+<build>
+<plugins>
+  <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-dependency-plugin</artifactId>
+    <version>3.1.1</version>
+    <executions>
+      <execution>
+        <id>copy-dependencies</id>
+        <phase>prepare-package</phase>
+        <goals>
+          <goal>copy-dependencies</goal>
+        </goals>
+        <configuration>
+          <outputDirectory>${project.build.directory}/lib</outputDirectory>
+          <overWriteReleases>true</overWriteReleases>
+          <overWriteSnapshots>true</overWriteSnapshots>
+          <overWriteIfNewer>true</overWriteIfNewer>
+        </configuration>
+      </execution>
+    </executions>
+  </plugin>
+</plugins>
+</build>
+
+
+
+
+
+
+
+
+
+
+
