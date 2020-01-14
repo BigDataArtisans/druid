@@ -35,7 +35,7 @@ bin/start-cluster-master-no-zk-server &
 sed -i "s/user.timezone=UTC/user.timezone=CTT/g" `grep "user.timezone=UTC" -rl conf`
 
 2, localhost --> hostname
-sed -i "s/localhost/$HOSTNAME/g" `grep "localhost" -rl conf/druid/cluster/_common`
+## sed -i "s/localhost/$HOSTNAME/g" `grep "localhost" -rl conf/druid/cluster/_common`
 
 3, monitor
 
