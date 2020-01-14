@@ -1,0 +1,79 @@
+
+
+172.20.67.10 Query
+172.20.67.11 Query
+172.20.67.12 Data
+172.20.67.13 Data
+172.20.67.14 Master MySQL / ZooKeeper
+
+Master Server
+8081 (Coordinator)
+8090 (Overlord)
+
+Data Server
+8083 (Historical)
+8091, 8100–8199 (Druid Middle Manager; you may need higher than port 8199 if you have a very high druid.worker.capacity)
+
+Query Server
+8082 (Broker)
+8088 (Router, if used)
+
+
+
+Start Query Server
+bin/start-cluster-query-server &
+
+Start Data Server
+bin/start-cluster-data-server &
+
+Start Master Server
+bin/start-cluster-master-no-zk-server &
+
+
+
+1, UTC --> CTT
+sed -i "s/user.timezone=UTC/user.timezone=CTT/g" `grep "user.timezone=UTC" -rl conf`
+
+2, localhost --> hostname
+sed -i "s/localhost/$HOSTNAME/g" `grep "localhost" -rl conf/druid/cluster/_common`
+
+3, monitor
+
+"graphite-emitter"
+
+druid.monitoring.monitors=["org.apache.druid.java.util.metrics.JvmMonitor"]
+druid.emitter=composing
+druid.emitter.composing.emitters=["logging","graphite"]
+
+druid.emitter.logging.logLevel=info
+druid.emitter.graphite.hostname=10.101.52.38
+druid.emitter.graphite.port=2004
+druid.emitter.graphite.eventConverter={"type":"all", "namespacePrefix": "druid-graphite", "ignoreHostname":false, "ignoreServiceName":false}
+druid.emitter.graphite.flushPeriod=10000
+
+cd extensions && mkdir graphite-emitter && cd graphite-emitter
+export http_proxy=172.20.66.2:8888
+export https_proxy=172.20.66.2:8888
+
+wget https://repo1.maven.org/maven2/org/apache/druid/extensions/contrib/graphite-emitter/0.16.1-incubating/graphite-emitter-0.16.1-incubating.jar
+wget https://repo1.maven.org/maven2/io/dropwizard/metrics/metrics-core/4.0.0/metrics-core-4.0.0.jar
+wget https://repo1.maven.org/maven2/io/dropwizard/metrics/metrics-graphite/3.1.2/metrics-graphite-3.1.2.jar
+wget https://repo1.maven.org/maven2/org/slf4j/slf4j-api/1.7.25/slf4j-api-1.7.25.jar
+
+
+
+3, Sync
+cd ~
+rm -rf *
+wget http://172.20.67.14:8000/apache-druid-0.16.1-incubating.tar.gz . && tar xf apache-druid-0.16.1-incubating.tar.gz
+tar xf apache-druid-0.16.1-incubating.tar.gz
+cd apache-druid-0.16.1-incubating
+
+
+
+
+
+
+
+
+
