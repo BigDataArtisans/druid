@@ -1,0 +1,141 @@
+
+
+
+
+
+172.20.67.10:18870,172.20.67.11:18870,172.20.67.12:18870,172.20.67.13:18870,172.20.67.14:18870
+bigdata-rtc-olap-event
+
+./bin/kafka-topics.sh --list --zookeeper 172.20.67.10:16711
+
+
+
+"parser": {
+  "type": "string",
+  "parseSpec": {
+    "format": "json",
+    "timestampSpec": {
+      "column": "intotime",
+      "format": "auto"
+    },
+    "dimensionsSpec": {
+      "dimensions": [
+        "action",
+        "appversion",
+        "brand",
+        "category",
+        "label",
+        "language",
+        "platform",
+        "sdkversion",
+        "system",
+        "version",
+        "platcode",
+        "productcode"
+      ]
+    }
+  }
+},
+"metricsSpec": [
+  {
+    "name": "count",
+    "type": "count"
+  },
+  {
+    "type": "hyperUnique",
+    "name": "unique_unionid",
+    "fieldName": "unionid",
+    "isInputHyperUnique": false,
+    "round": false
+  },
+  {
+    "type": "hyperUnique",
+    "name": "unique_openid",
+    "fieldName": "openid",
+    "isInputHyperUnique": false,
+    "round": false
+  },
+  {
+    "type": "hyperUnique",
+    "name": "unique_userid",
+    "fieldName": "userid",
+    "isInputHyperUnique": false,
+    "round": false
+  }
+]
+
+
+
+
+SELECT
+  SUM("count") pv
+FROM "bigdata-rtc-olap-event"
+
+
+
+SELECT
+  "action",
+  SUM("count") pv,
+  APPROX_COUNT_DISTINCT(unique_unionid) AS "uv"
+FROM "bigdata-rtc-olap-event"
+WHERE "__time" >= CURRENT_TIMESTAMP - INTERVAL '1' DAY
+GROUP BY 1
+ORDER BY "uv" DESC
+
+
+SELECT
+  TIME_FLOOR("__time", 'PT1M') AS "Time",
+  SUM("count") pv,
+  APPROX_COUNT_DISTINCT(unique_unionid) AS "uv"
+FROM "bigdata-rtc-olap-event"
+WHERE "__time" >= CURRENT_TIMESTAMP - INTERVAL '1' DAY
+GROUP BY 1
+ORDER BY "uv" DESC
+
+
+SELECT
+  TIME_FLOOR("__time", 'PT1M') AS "Time",
+  SUM("count") pv,
+  APPROX_COUNT_DISTINCT(unique_unionid) AS "uv"
+FROM "bigdata-rtc-olap-event"
+WHERE "__time" >= CURRENT_TIMESTAMP - INTERVAL '1' DAY
+GROUP BY 1
+HAVING pv > 100
+ORDER BY 1  DESC
+
+
+SELECT
+  "__time",
+  TIME_FLOOR("__time", 'PT1M') AS "Time"
+FROM "bigdata-rtc-olap-event"
+ORDER BY "__time"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
