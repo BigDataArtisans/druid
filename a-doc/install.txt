@@ -75,7 +75,7 @@ bin/start-cluster-master-no-zk-server &
 vi conf/druid/cluster/_common/common.runtime.properties
 172.20.67.14
 
-sed -i "s/0.0.0.0/172.20.67.12/g" `grep "0.0.0.0" -rl conf/druid/cluster/_common`
+sed -i "s/localhost/$HOSTNAME/g" `grep "localhost" -rl conf/druid/cluster/_common`
 
 
 
