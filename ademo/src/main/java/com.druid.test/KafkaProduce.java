@@ -8,6 +8,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 
 import java.util.Properties;
+import java.util.UUID;
 
 public class KafkaProduce {
 
@@ -26,25 +27,31 @@ public class KafkaProduce {
 
     public static void connectionKafka() throws Exception {
         Properties props = new Properties();
-        props.put("bootstrap.servers", "localhost:9092");
+        props.put("bootstrap.servers", "10.100.156.93:9092");
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
         Producer<String, String> producer = new KafkaProducer(props);
 
-        producer.send(cr(new Event("2021-01-13 18:14:10", "2019-01-11T12:30:30Z CTT", "nanjing", "uid-1", 1)));
-        producer.send(cr(new Event("2021-01-13 18:14:10", "2019-01-11T12:30:30Z CTT", "nanjing", "uid-1", 1)));
-        producer.send(cr(new Event("2021-01-13 18:14:10", "2019-01-11T12:30:30Z CTT", "nanjing", "uid-1", 1)));
-        producer.send(cr(new Event("2021-01-13 18:14:10", "2019-01-11T12:30:30Z CTT", "nanjing", "uid-1", 1)));
-        producer.send(cr(new Event("2021-01-13 18:14:10", "2019-01-11T12:30:30Z CTT", "nanjing", "uid-1", 1)));
-        producer.send(cr(new Event("2021-01-13 18:14:10", "2019-01-11T12:30:30Z CTT", "nanjing", "uid-1", 1)));
+        while (true) {
+            producer.send(cr(new Event("2025-01-17 18:14:10", "2020-01-17 CTT", "nanjing", "uid-1" + UUID.randomUUID().toString(), 1)));
 
-        producer.close();
+
+            // Thread.sleep(1);
+
+
+        }
+
+        // producer.close();
+
+
     }
+
+
 
     public static ProducerRecord cr(Event event) {
         String content = JSON.toJSONString(event);
-        return new ProducerRecord("bigdata-rtc-olap", content);
+        return new ProducerRecord("bigdata-rtc-olap-test", content);
     }
 
 }
