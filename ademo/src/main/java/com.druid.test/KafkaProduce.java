@@ -7,6 +7,7 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 
+import java.text.SimpleDateFormat;
 import java.util.Properties;
 import java.util.UUID;
 
@@ -27,31 +28,40 @@ public class KafkaProduce {
 
     public static void connectionKafka() throws Exception {
         Properties props = new Properties();
-        props.put("bootstrap.servers", "10.100.156.93:9092");
+        props.put("bootstrap.servers", "10.101.52.38:9092");
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
         Producer<String, String> producer = new KafkaProducer(props);
 
+        int seq = 459;
+
         while (true) {
-            producer.send(cr(new Event("2025-01-17 18:14:10", "2020-01-17 CTT", "nanjing", "uid-1" + UUID.randomUUID().toString(), 1)));
 
+            seq += 1;
 
-            // Thread.sleep(1);
+            DateTime now = DateTime.now();
 
+            // now = now.plusYears(2).plusSeconds(delta);
+            // now = now.plusDays(1);
+
+            String dataStr = now.toString("yyyy-MM-dd HH:mm:ss");
+            dataStr += " CTT";
+
+            producer.send(cr(new Event(dataStr, seq)));
+
+            Thread.sleep(1000);
+
+            System.out.println(seq);
 
         }
-
-        // producer.close();
-
 
     }
 
 
-
     public static ProducerRecord cr(Event event) {
         String content = JSON.toJSONString(event);
-        return new ProducerRecord("bigdata-rtc-olap-test", content);
+        return new ProducerRecord("druid-test", content);
     }
 
 }

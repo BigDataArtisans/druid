@@ -10,5 +10,13 @@ mvn clean install -DskipTests -Dcheckstyle.skip=true -Drat.skip=true -Pdist -T 2
 
 
 
+bin/kafka-server-start.sh config/server.properties
+
+./bin/start-micro-quickstart
+bin/run-druid historical conf/druid/single-server/micro-quickstart
+
+bin/kafka-topics.sh --create --zookeeper 10.101.52.38:2181 --replication-factor 1 --partitions 1 --topic druid-test
+
+
 
 

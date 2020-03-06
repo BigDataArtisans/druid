@@ -1,54 +1,33 @@
 package com.druid.test;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
+import java.util.Random;
 
 public class Event {
 
-    private transient DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    private long timestamp;
-    private String country;
-    private String city;
+    private String timestamp;
     private String uid;
     private int age;
+    private int seq;
 
-    public Event(String timestamp, String country, String city, String uid, int age) {
+    public Event(String timestamp, int seq) {
 
-        LocalDateTime dateTime = LocalDateTime.parse(timestamp, dtf2);
-        this.timestamp = dateTime.toInstant(ZoneOffset.of("+8")).toEpochMilli();
+        this.timestamp = timestamp;
+        int i = new Random().nextInt(50);
 
-        System.out.println(this.timestamp);
-        System.out.println(System.currentTimeMillis());
+        // i = 66;
 
-        this.country = country;
-        this.city = city;
-        this.uid = uid;
-        this.age = age;
+        this.uid = "uid-" + i;
+        this.age = i;
+
+        this.seq = seq;
     }
 
-    public long getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(long timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
     }
 
     public String getUid() {
@@ -65,5 +44,13 @@ public class Event {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public int getSeq() {
+        return seq;
+    }
+
+    public void setSeq(int seq) {
+        this.seq = seq;
     }
 }

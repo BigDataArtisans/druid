@@ -3,9 +3,11 @@
 
 10.100.156.93:9092
 
-bin/kafka-topics.sh --zookeeper 10.100.156.93:2181 --delete --topic bigdata-rtc-olap-test
+bin/kafka-topics.sh --zookeeper 10.101.52.38:2181 --delete --topic bigdata-rtc-olap-test
 
-bin/kafka-topics.sh --create --zookeeper 10.100.156.93:2181 --replication-factor 1 --partitions 6 --topic bigdata-rtc-olap-test
+bin/kafka-topics.sh --create --zookeeper 10.101.52.38:2181 --replication-factor 1 --partitions 1 --topic druid-test
+
+
 bin/kafka-configs.sh --zookeeper 10.100.156.93:2181 --alter --entity-name bigdata-rtc-olap-test --entity-type topics --add-config retention.ms=86400000
 
 
