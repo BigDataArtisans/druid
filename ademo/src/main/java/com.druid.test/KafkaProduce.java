@@ -34,7 +34,7 @@ public class KafkaProduce {
 
         Producer<String, String> producer = new KafkaProducer(props);
 
-        int seq = 459;
+        int seq = 591;
 
         while (true) {
 
