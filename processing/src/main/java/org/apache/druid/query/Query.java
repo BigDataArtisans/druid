@@ -29,6 +29,7 @@ import org.apache.druid.query.datasourcemetadata.DataSourceMetadataQuery;
 import org.apache.druid.query.filter.DimFilter;
 import org.apache.druid.query.groupby.GroupByQuery;
 import org.apache.druid.query.metadata.metadata.SegmentMetadataQuery;
+import org.apache.druid.query.movingaverage.MovingAverageQuery;
 import org.apache.druid.query.scan.ScanQuery;
 import org.apache.druid.query.search.SearchQuery;
 import org.apache.druid.query.select.SelectQuery;
@@ -58,6 +59,7 @@ import java.util.concurrent.ExecutorService;
     @JsonSubTypes.Type(name = Query.SEGMENT_METADATA, value = SegmentMetadataQuery.class),
     @JsonSubTypes.Type(name = Query.SELECT, value = SelectQuery.class),
     @JsonSubTypes.Type(name = Query.TOPN, value = TopNQuery.class),
+    @JsonSubTypes.Type(name = Query.MOVINGAVERAGE, value = MovingAverageQuery.class),
     @JsonSubTypes.Type(name = Query.DATASOURCE_METADATA, value = DataSourceMetadataQuery.class)
 
 })
@@ -72,6 +74,7 @@ public interface Query<T>
   String SELECT = "select";
   String TOPN = "topN";
   String DATASOURCE_METADATA = "dataSourceMetadata";
+  String MOVINGAVERAGE = "movingAverage";
 
   DataSource getDataSource();
 
