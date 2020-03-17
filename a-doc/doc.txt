@@ -17,8 +17,65 @@ bin/run-druid broker conf/druid/single-server/micro-quickstart
 
 
 
+org.apache.druid.cli.CliBroker
+
+org.apache.druid.cli.CliRouter
 
 
+
+
+
+2020-03-17T09:20:27,694 WARN [main] org.apache.hadoop.util.NativeCodeLoader - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+Exception in thread "main" java.lang.RuntimeException: com.google.inject.CreationException: Unable to create injector, see the following errors:
+
+1) No implementation for org.apache.druid.query.QuerySegmentWalker was bound.
+  while locating com.google.inject.Provider<org.apache.druid.query.QuerySegmentWalker>
+    for the 1st parameter of org.apache.druid.query.movingaverage.MovingAverageQueryToolChest.<init>(MovingAverageQueryToolChest.java:61)
+  at org.apache.druid.query.movingaverage.MovingAverageQueryModule.configure(MovingAverageQueryModule.java:48) (via modules: com.google.inject.util.Modules$OverrideModule -> org.apache.druid.query.movingaverage.MovingAverageQueryModule)
+
+1 error
+        at org.apache.druid.cli.GuiceRunnable.makeInjector(GuiceRunnable.java:72)
+        at org.apache.druid.cli.ServerRunnable.run(ServerRunnable.java:58)
+        at org.apache.druid.cli.Main.main(Main.java:113)
+Caused by: com.google.inject.CreationException: Unable to create injector, see the following errors:
+
+1) No implementation for org.apache.druid.query.QuerySegmentWalker was bound.
+  while locating com.google.inject.Provider<org.apache.druid.query.QuerySegmentWalker>
+    for the 1st parameter of org.apache.druid.query.movingaverage.MovingAverageQueryToolChest.<init>(MovingAverageQueryToolChest.java:61)
+  at org.apache.druid.query.movingaverage.MovingAverageQueryModule.configure(MovingAverageQueryModule.java:48) (via modules: com.google.inject.util.Modules$OverrideModule -> org.apache.druid.query.movingaverage.MovingAverageQueryModule)
+
+1 error
+        at com.google.inject.internal.Errors.throwCreationExceptionIfErrorsExist(Errors.java:470)
+        at com.google.inject.internal.InternalInjectorCreator.initializeStatically(InternalInjectorCreator.java:155)
+        at com.google.inject.internal.InternalInjectorCreator.build(InternalInjectorCreator.java:107)
+        at com.google.inject.Guice.createInjector(Guice.java:99)
+        at com.google.inject.Guice.createInjector(Guice.java:73)
+        at com.google.inject.Guice.createInjector(Guice.java:62)
+        at org.apache.druid.initialization.Initialization.makeInjectorWithModules(Initialization.java:431)
+        at org.apache.druid.cli.GuiceRunnable.makeInjector(GuiceRunnable.java:69)
+        ... 2 more
+
+
+export DRUID_MASTER=/work/projects/BigDataArtisans/bigdataindex/druid-master
+
+cd /work/projects/BigDataArtisans/bigdataindex/druid-master/services
+mvn clean install -Pdist -DskipTests -Dcheckstyle.skip=true -Drat.skip=true
+
+cd /work/projects/BigDataArtisans/bigdataindex/druid-master
+mvn -pl distribution clean install -Pdist -DskipTests -Dcheckstyle.skip=true -Drat.skip=true
+
+
+cd /work/projects/BigDataArtisans/bigdataindex/druid-master/distribution/target
+tar xf apache-druid-0.18.0-SNAPSHOT-bin.tar.gz
+cd apache-druid-0.18.0-SNAPSHOT
+
+export DRUID_MASTER=/work/projects/BigDataArtisans/bigdataindex/druid-master
+\cp ${DRUID_MASTER}/extensions-contrib/moving-average-query/target/druid-moving-average-query-0.18.0-SNAPSHOT.jar lib
+
+
+bin/run-druid router conf/druid/single-server/micro-quickstart
+
+bin/run-druid broker conf/druid/single-server/micro-quickstart
 
 
 
