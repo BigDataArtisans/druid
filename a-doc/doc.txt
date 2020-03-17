@@ -1,0 +1,24 @@
+
+
+
+
+mvn clean install -Pdist -DskipTests -Dcheckstyle.skip=true -Drat.skip=true    -T 2C
+
+
+cd /work/projects/BigDataArtisans/bigdataindex/druid-master/distribution/target/apache-druid-0.18.0-SNAPSHOT
+
+export DRUID_MASTER=/work/projects/BigDataArtisans/bigdataindex/druid-master
+\cp ${DRUID_MASTER}/extensions-contrib/moving-average-query/target/druid-moving-average-query-0.18.0-SNAPSHOT.jar lib
+
+
+bin/run-druid router conf/druid/single-server/micro-quickstart
+
+bin/run-druid broker conf/druid/single-server/micro-quickstart
+
+
+
+
+
+
+
+
